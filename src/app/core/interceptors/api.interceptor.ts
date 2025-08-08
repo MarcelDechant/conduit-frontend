@@ -6,14 +6,16 @@ import {
   HttpRequest,
 } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { environment } from "../../../environments/environment.prod";
 
 @Injectable({ providedIn: "root" })
 export class ApiInterceptor implements HttpInterceptor {
   intercept(
     req: HttpRequest<any>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<any>> {
-    const apiReq = req.clone({ url: `https://api.realworld.io/api${req.url}` });
+    // const apiReq = req.clone({ url: `https://api.realworld.io/api${req.url}` });
+    const apiReq = req.clone({ url: `${environment.apiUrl}${req.url}` });
     return next.handle(apiReq);
   }
 }
